@@ -20,3 +20,7 @@ input.editor-text {
     background-color: gray;
     text-decoration-line: line-through;
 }
+.slick-cell.selected {
+    background-color: Highlight;
+    color: HighlightText;
+}
