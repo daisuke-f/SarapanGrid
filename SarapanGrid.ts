@@ -368,6 +368,31 @@ namespace Sarapan {
             this._dataView.endUpdate();
         }
 
+        public commitChanges(): void {
+            this._dataView.beginUpdate();
+            for(var i=this._dataView.getLength()-1; 0<=i; i--) {
+                let item: any = this._dataView.getItemByIdx(i);
+                let id = this._getDataId(item);
+                let meta = this._getMetadata(item);
+
+                switch(meta.state) {
+                    case EditState.Added:
+                    case EditState.Changed:
+                        meta.state = EditState.NotEdited;
+                        meta.savedData = Utils.extend({}, item);
+                        meta.savedTime = new Date();
+                        break;
+                    case EditState.Deleted:
+                        this._dataView.deleteItem(id);
+                        delete this._metadata[id];
+                        break;
+                }
+
+            }
+            this._dataView.endUpdate();
+            this._grid.invalidate();
+        }
+
         public getColumns(): Column[] {
             return this._columns;
         }

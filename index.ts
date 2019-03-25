@@ -76,6 +76,13 @@ window.onload = function(evt) {
             dlElm.click();
         });
     }
+
+    var btn_commit = document.getElementById('btn_commit');
+    if(btn_commit) {
+        btn_commit.addEventListener('click', function(evt) {
+            grid.commitChanges();
+        });
+    }
     
     var data = [
         {
