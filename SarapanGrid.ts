@@ -51,6 +51,10 @@ namespace Sarapan {
         static isNullOrEmptyString(test: string|undefined) {
             return test==null || 0==test.length;
         }
+
+        static sortNumberDescComparison(item1: number, item2: number) {
+            return item2 - item1;
+        }
     }
 
     export enum EditState {
@@ -321,6 +325,7 @@ namespace Sarapan {
 
         public deleteRows(rows: number[]): void {
             this._dataView.beginUpdate();
+            rows = rows.sort(Utils.sortNumberDescComparison);
             rows.forEach(row => {
                 let item: any = this._dataView.getItemByIdx(row);
                 if(item==null) {
@@ -343,6 +348,7 @@ namespace Sarapan {
 
         public revertRows(rows: number[]): void {
             this._dataView.beginUpdate();
+            rows = rows.sort(Utils.sortNumberDescComparison);
             rows.forEach(row => {
                 let item: any = this._dataView.getItemByIdx(row);
                 if(item==null) {
