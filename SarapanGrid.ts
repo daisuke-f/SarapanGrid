@@ -118,6 +118,7 @@ namespace Sarapan {
                 }
                 return "AutoKey-" + Utils.formatDate() + "-" + Math.floor(Math.random()*1000);
             },
+            multiColumnSort: true,
             rowIdProperty: "SarapanGrid-RowId",
             useRowNumColumn: true,
             useEditStatusColumn: true
@@ -172,6 +173,27 @@ namespace Sarapan {
             this._grid.render();
         }
 
+        public onSort(e: Slick.EventData, args: {multiColumnSort: boolean, sortCols: { columnId: string, sortCol: Slick.IColumnOptions, sortAsc: boolean }[]}) {
+            var cols = args.sortCols;
+            var data = this._dataView.getItems();
+
+            data.sort(function (dataRow1: any, dataRow2: any) {
+                for (var i = 0, l = cols.length; i < l; i++) {
+                    var field: any = cols[i].sortCol.field;
+                    var sign = cols[i].sortAsc ? 1 : -1;
+                    var value1 = dataRow1[field], value2 = dataRow2[field];
+                    var result = (value1 == value2 ? 0 : (value1 > value2 ? 1 : -1)) * sign;
+                    if (result != 0) {
+                        return result;
+                    }
+                }
+                return 0;
+            });
+            this._dataView.setItems(data);
+            this._grid.invalidateAllRows();
+            this._grid.render();
+        }
+
         private _getDataId(data: T): any {
             return data[<keyof T>this._options.rowIdProperty];
         }
@@ -214,6 +236,7 @@ namespace Sarapan {
             this._dataView.onRowCountChanged.subscribe(this.onRowCountChanged.bind(this));
             this._dataView.onRowsChanged.subscribe(this.onRowsChanged.bind(this));
             this._grid.onCellChange.subscribe(this.onCellChange.bind(this));
+            this._grid.onSort.subscribe(this.onSort.bind(this));
         }
 
         public initData(data: T[]) {

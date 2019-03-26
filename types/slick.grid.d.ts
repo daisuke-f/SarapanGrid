@@ -127,6 +127,24 @@ declare namespace Slick {
         render(): void;
         updateRowCount(): void;
 
+        // Events
+        onSort: Slick.Event & {
+            subscribe: (e:Slick.Event, args: (
+                {
+                    multiColumnSort: boolean,
+                    columnId: string|null,
+                    sortCol: string|null,
+                    sortAsc: boolean
+                } | {
+                    multiColumnSort: boolean,
+                    sortCols: {
+                        columnId: string,
+                        sortCol: Slick.IColumnOptions,
+                        sortAsc: boolean
+                    }[]
+                }
+            )) => number;
+        };
         onCellChange: Slick.Event & {
             subscribe: (e: Slick.Event, args: { row: number, cell: number, item: any }) => void;
         };

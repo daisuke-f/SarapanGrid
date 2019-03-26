@@ -6,13 +6,15 @@ var columns: Sarapan.Column[] = [
         id: "f0",
         field: "f0",
         name: "f0",
-        editor: Slick.Editors.Text
+        editor: Slick.Editors.Text,
+        sortable: true
     },
     {
         id: "f1",
         field: "f1",
         name: "f1",
-        key: true
+        key: true,
+        sortable: true
     }
 ];
 var options = {

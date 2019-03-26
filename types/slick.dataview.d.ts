@@ -18,7 +18,7 @@ declare namespace Slick.Data {
         mapIdsToRows(idArray: string[]): any[];
         mapRowsToIds(rowArray: any[]): string[];
 
-        setItems(data: object, objectIdProperty: string): void;
+        setItems(data: object, objectIdProperty?: string): void;
 
         onRowCountChanged: Slick.Event & {
             subscribe: (e: Slick.EventData, args: { previous: number; current: number; dataView: DataView; callingOnRowsChanged: boolean; }) => void;
